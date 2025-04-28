@@ -3,18 +3,25 @@ from constants import *
 
 
 def main():
-    loop = "on"
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-    pygame.Surface.fill(screen, (1, 1, 1))
+    pygame.Surface.fill(screen, (0, 0, 0)) # Fill screen black initially
     print("Starting Asteroids!")
     print(f"Screen width: {SCREEN_WIDTH}")
     print(f"Screen height: {SCREEN_HEIGHT}")
-    while loop == "on":
+    clock = pygame.time.Clock() # Create a Clock object
+    dt = 0 # Initialize delta time variable
+    running = True
+    while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
-        pygame.display.flip()
+        
+        pygame.display.flip() # Update the screen
+
+        dt = clock.tick(60) / 1000  # Limit the frame rate to 60 FPS and calculate delta time
+        
+        print(clock.get_fps()) # print fps
 
 
 if __name__ == "__main__":

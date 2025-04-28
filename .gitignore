@@ -1,3 +1,4 @@
-/pip*/
-/pygame*/
-/venv/
+pip*/
+pygame*/
+venv/
+__pycache__/

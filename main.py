@@ -6,21 +6,28 @@ from player import Player
 def main():
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    clock = pygame.time.Clock() # Create a Clock object
+    dt = 0 # Initialize delta time variable
+
     print("Starting Asteroids!")
     print(f"Screen width: {SCREEN_WIDTH}")
     print(f"Screen height: {SCREEN_HEIGHT}")
-    clock = pygame.time.Clock() # Create a Clock object
-    dt = 0 # Initialize delta time variable
+    
+    updatable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
+    Player.containers = (updatable, drawable)
+
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
-    running = True
-    while running:
+        
+    while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
         
-        pygame.Surface.fill(screen, (0, 0, 0)) # Fill screen black initially
-        player.update(dt)
-        player.draw(screen) # Draw player
+        screen.fill("black") # Fill screen black
+        updatable.update(dt) # Update updatable group
+        for item in drawable:
+            item.draw(screen) # Loop for drawing items from drawable group
         pygame.display.flip() # Update the screen
         dt = clock.tick(60) / 1000  # Limit the frame rate to 60 FPS and calculate delta time
         

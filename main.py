@@ -1,4 +1,5 @@
 import pygame
+import sys
 from constants import *
 from player import Player
 from asteroid import Asteroid
@@ -38,8 +39,12 @@ def main():
             item.draw(screen) # Loop for drawing items from drawable group
         pygame.display.flip() # Update the screen
         dt = clock.tick(60) / 1000  # Limit the frame rate to 60 FPS and calculate delta time
+        for object in asteroids:
+            if player.collide(object):
+                print("Game over!")
+                sys.exit()
+
         
-        print(clock.get_fps()) # print fps
 
 
 if __name__ == "__main__":

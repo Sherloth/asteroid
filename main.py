@@ -16,6 +16,7 @@ def main():
     print("Starting Asteroids!")
     print(f"Screen width: {SCREEN_WIDTH}")
     print(f"Screen height: {SCREEN_HEIGHT}")
+    counter = 0
     
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
@@ -38,6 +39,14 @@ def main():
                 return
         
         screen.fill("black") # Fill screen black
+        
+        font_size = SCREEN_HEIGHT // 20
+        font = pygame.font.SysFont("arial", font_size)
+        text = f"Score: {counter}"
+        text_surface = font.render(text, True, (255, 255, 255))
+        text_rect = text_surface.get_rect(center=(SCREEN_WIDTH // 2, font_size // 2 + 5))
+        screen.blit(text_surface, text_rect)
+        
         updatable.update(dt) # Update updatable group
         for item in drawable:
             item.draw(screen) # Loop for drawing items from drawable group
@@ -50,8 +59,9 @@ def main():
         for object in asteroids:
             for bullet in shots:
                 if object.collide(bullet):
-                    object.kill()
+                    object.split()
                     bullet.kill()
+                    counter += 1
 
         
 
